@@ -9,6 +9,10 @@ var (
 	EAST, _  = NewDirection("E")
 )
 
+var (
+	directions = []direction{WEST, NORTH, EAST, SOUTH}
+)
+
 type direction string
 
 func NewDirection(dir string) (direction, error) {

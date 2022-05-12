@@ -19,16 +19,33 @@ func (r *Rover) Move(newX, newY int) {
 }
 
 func (r *Rover) Rotate(val int) {
+	currIdx := r.findCurrIdx(r.direction)
+	nextIdx := currIdx + val
+	directionsLength := len(directions)
 
+	if nextIdx < 0 {
+		nextIdx = directionsLength - 1
+	}
+
+	if nextIdx >= directionsLength {
+		nextIdx = nextIdx % directionsLength
+	}
+
+	r.direction = directions[nextIdx]
+	fmt.Println(r.CurrentPosition())
 }
 
-func (r *Rover) TryMove(val int) (x, y int) {
+func (r *Rover) TryMove(val int) (int, int) {
 	newX, newY := r.x, r.y
 	switch r.direction {
-	case NORTH, SOUTH:
+	case NORTH:
 		newY += val
-	case EAST, WEST:
+	case SOUTH:
+		newY -= val
+	case EAST:
 		newX += val
+	case WEST:
+		newX -= val
 	default:
 	}
 
@@ -37,4 +54,13 @@ func (r *Rover) TryMove(val int) (x, y int) {
 
 func (r *Rover) CurrentPosition() string {
 	return fmt.Sprintf("%v:%v,%v", r.direction, r.x, r.y)
+}
+
+func (r *Rover) findCurrIdx(currDirection direction) int {
+	for idx, direction := range directions {
+		if direction == currDirection {
+			return idx
+		}
+	}
+	return 0
 }

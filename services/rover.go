@@ -12,8 +12,8 @@ type rover struct {
 	rover      models.Rover
 }
 
-func NewRover(land models.Grid, moveMapper map[string][2]int) IRover {
-	return &rover{land: land, moveMapper: moveMapper}
+func NewRover(rov models.Rover, land models.Grid, moveMapper map[string][2]int) IRover {
+	return &rover{rover: rov, land: land, moveMapper: moveMapper}
 }
 
 func (r *rover) Action(instructions []string) string {
@@ -32,7 +32,7 @@ func (r *rover) Action(instructions []string) string {
 		}
 
 		if rotate != 0 {
-
+			r.rover.Rotate(rotate)
 		}
 	}
 
