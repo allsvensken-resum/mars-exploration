@@ -13,12 +13,12 @@ func NewRover() Rover {
 	return Rover{x: 0, y: 0, direction: direction}
 }
 
-func (r *Rover) Move(newX, newY int) {
+func (r *Rover) Move(newX, newY int) string {
 	r.x, r.y = newX, newY
-	fmt.Println(r.CurrentPosition())
+	return r.CurrentPosition()
 }
 
-func (r *Rover) Rotate(val int) {
+func (r *Rover) Rotate(val int) string {
 	currIdx := r.findCurrIdx(r.direction)
 	nextIdx := currIdx + val
 	directionsLength := len(directions)
@@ -32,7 +32,7 @@ func (r *Rover) Rotate(val int) {
 	}
 
 	r.direction = directions[nextIdx]
-	fmt.Println(r.CurrentPosition())
+	return r.CurrentPosition()
 }
 
 func (r *Rover) TryMove(val int) (int, int) {

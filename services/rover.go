@@ -3,7 +3,7 @@ package services
 import "mars/models"
 
 type IRover interface {
-	Explore([]string) string
+	Explore([]string) []string
 }
 
 type rover struct {
@@ -16,29 +16,28 @@ func NewRover(rov models.Rover, land models.Grid, moveMapper map[string][2]int) 
 	return &rover{rover: rov, land: land, moveMapper: moveMapper}
 }
 
-func (r *rover) Explore(instructions []string) string {
-	const MOVE_INSTRUCTION = 0
-	const ROTATE_INSTRUCTION = 1
+func (r *rover) Explore(instructions []string) []string {
+	histories := make([]string, 0)
 	mappedInstructions := r.mapInstructionToNumber(instructions)
 
 	for _, instruction := range mappedInstructions {
 		move := instruction[0]
 		rotate := instruction[1]
 
-		if move != MOVE_INSTRUCTION {
+		if isMoveInstruction(move) {
 			newX, newY := r.rover.TryMove(move)
 			if !r.land.IsOutOfBound(newX, newY) {
-				r.rover.Move(newX, newY)
+				histories = append(histories, r.rover.Move(newX, newY))
 			}
 			continue
 		}
 
-		if rotate != ROTATE_INSTRUCTION {
-			r.rover.Rotate(rotate)
+		if isRotateInstruction(rotate) {
+			histories = append(histories, r.rover.Rotate(rotate))
 		}
 	}
 
-	return r.rover.CurrentPosition()
+	return histories
 }
 
 func (r *rover) mapInstructionToNumber(instructions []string) [][2]int {
@@ -51,4 +50,12 @@ func (r *rover) mapInstructionToNumber(instructions []string) [][2]int {
 		}
 	}
 	return mappedInstructions
+}
+
+func isRotateInstruction(instruction int) bool {
+	return instruction != 0
+}
+
+func isMoveInstruction(instruction int) bool {
+	return instruction != 0
 }

@@ -6,6 +6,7 @@ import (
 	"mars/services"
 	"mime/multipart"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -33,22 +34,41 @@ func (r *rover) ExploreMars(c *gin.Context) {
 
 	openedFile, err := form.File.Open()
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "can't open file."})
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"message": "can't open file."})
 		return
 	}
 
 	file, err := ioutil.ReadAll(openedFile)
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "can't read file."})
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"message": "can't read file."})
 		return
 	}
 
 	instructions := strings.Fields(string(file))
-	land := models.NewGrid(2, 4)
+
+	if len(instructions) < 2 {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"message": "you must give grid size and at least one instruction."})
+	}
+
+	gridSize := instructions[0]
+	gridSizeArr := strings.Split(gridSize, "")
+
+	maxX, err := strconv.Atoi(gridSizeArr[0])
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"message": "grid size is invalid."})
+		return
+	}
+
+	maxY, err := strconv.Atoi(gridSizeArr[1])
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"message": "grid size is invalid."})
+	}
+
+	land := models.NewGrid(maxX, maxY)
 	rover := models.NewRover()
 	roverService := services.NewRover(rover, land, r.moveInstructionMapper)
-	roverService.Action(instructions)
+	histories := roverService.Explore(instructions[1:])
 
-	c.JSON(http.StatusOK, gin.H{"test": instructions})
+	c.JSON(http.StatusOK, gin.H{"result": histories})
 }
