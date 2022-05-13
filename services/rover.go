@@ -3,7 +3,7 @@ package services
 import "mars/models"
 
 type IRover interface {
-	Action([]string) string
+	Explore([]string) string
 }
 
 type rover struct {
@@ -16,7 +16,7 @@ func NewRover(rov models.Rover, land models.Grid, moveMapper map[string][2]int) 
 	return &rover{rover: rov, land: land, moveMapper: moveMapper}
 }
 
-func (r *rover) Action(instructions []string) string {
+func (r *rover) Explore(instructions []string) string {
 	mappedInstructions := r.mapInstructionToNumber(instructions)
 
 	for _, instruction := range mappedInstructions {
@@ -42,7 +42,11 @@ func (r *rover) Action(instructions []string) string {
 func (r *rover) mapInstructionToNumber(instructions []string) [][2]int {
 	mappedInstructions := make([][2]int, 0)
 	for _, instruction := range instructions {
-		mappedInstructions = append(mappedInstructions, r.moveMapper[instruction])
+		mapped, ok := r.moveMapper[instruction]
+
+		if ok {
+			mappedInstructions = append(mappedInstructions, mapped)
+		}
 	}
 	return mappedInstructions
 }
