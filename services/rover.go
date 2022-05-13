@@ -17,13 +17,15 @@ func NewRover(rov models.Rover, land models.Grid, moveMapper map[string][2]int) 
 }
 
 func (r *rover) Explore(instructions []string) string {
+	const MOVE_INSTRUCTION = 0
+	const ROTATE_INSTRUCTION = 1
 	mappedInstructions := r.mapInstructionToNumber(instructions)
 
 	for _, instruction := range mappedInstructions {
 		move := instruction[0]
 		rotate := instruction[1]
 
-		if move != 0 {
+		if move != MOVE_INSTRUCTION {
 			newX, newY := r.rover.TryMove(move)
 			if !r.land.IsOutOfBound(newX, newY) {
 				r.rover.Move(newX, newY)
@@ -31,7 +33,7 @@ func (r *rover) Explore(instructions []string) string {
 			continue
 		}
 
-		if rotate != 0 {
+		if rotate != ROTATE_INSTRUCTION {
 			r.rover.Rotate(rotate)
 		}
 	}
