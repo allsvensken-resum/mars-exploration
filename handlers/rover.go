@@ -45,12 +45,13 @@ func (r *rover) ExploreMars(c *gin.Context) {
 	}
 
 	openedFile, err := form.File.Open()
-	defer openedFile.Close()
 
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"message": "can't open file."})
 		return
 	}
+
+	defer openedFile.Close()
 
 	file, err := ioutil.ReadAll(openedFile)
 
