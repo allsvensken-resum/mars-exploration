@@ -2,23 +2,30 @@ package models
 
 import "fmt"
 
-type Rover struct {
+type IRover interface {
+	Move(newX, newY int) string
+	Rotate(val int) string
+	TryMove(val int) (int, int)
+	CurrentPosition() string
+}
+
+type rover struct {
 	x         int
 	y         int
 	direction direction
 }
 
-func NewRover() Rover {
+func NewRover() IRover {
 	direction, _ := NewDirection("N")
-	return Rover{x: 0, y: 0, direction: direction}
+	return &rover{x: 0, y: 0, direction: direction}
 }
 
-func (r *Rover) Move(newX, newY int) string {
+func (r *rover) Move(newX, newY int) string {
 	r.x, r.y = newX, newY
 	return r.CurrentPosition()
 }
 
-func (r *Rover) Rotate(val int) string {
+func (r *rover) Rotate(val int) string {
 	currIdx := r.findCurrIdx(r.direction)
 	nextIdx := currIdx + val
 	directionsLength := len(directions)
@@ -35,7 +42,7 @@ func (r *Rover) Rotate(val int) string {
 	return r.CurrentPosition()
 }
 
-func (r *Rover) TryMove(val int) (int, int) {
+func (r *rover) TryMove(val int) (int, int) {
 	newX, newY := r.x, r.y
 	switch r.direction {
 	case NORTH:
@@ -52,11 +59,11 @@ func (r *Rover) TryMove(val int) (int, int) {
 	return newX, newY
 }
 
-func (r *Rover) CurrentPosition() string {
+func (r *rover) CurrentPosition() string {
 	return fmt.Sprintf("%v:%v,%v", r.direction, r.x, r.y)
 }
 
-func (r *Rover) findCurrIdx(currDirection direction) int {
+func (r *rover) findCurrIdx(currDirection direction) int {
 	for idx, direction := range directions {
 		if direction == currDirection {
 			return idx

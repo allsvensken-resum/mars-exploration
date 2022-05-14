@@ -9,10 +9,10 @@ type IRover interface {
 type rover struct {
 	land       models.Grid
 	moveMapper map[string][2]int
-	rover      models.Rover
+	rover      models.IRover
 }
 
-func NewRover(rov models.Rover, land models.Grid, moveMapper map[string][2]int) IRover {
+func NewRover(rov models.IRover, land models.Grid, moveMapper map[string][2]int) IRover {
 	return &rover{rover: rov, land: land, moveMapper: moveMapper}
 }
 
