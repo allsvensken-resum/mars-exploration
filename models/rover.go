@@ -12,12 +12,11 @@ type IRover interface {
 type rover struct {
 	x         int
 	y         int
-	direction direction
+	direction Direction
 }
 
-func NewRover() IRover {
-	direction, _ := NewDirection("N")
-	return &rover{x: 0, y: 0, direction: direction}
+func NewRover(x, y int, direction Direction) IRover {
+	return &rover{x: x, y: y, direction: direction}
 }
 
 func (r *rover) Move(newX, newY int) string {
@@ -53,7 +52,6 @@ func (r *rover) TryMove(val int) (int, int) {
 		newX += val
 	case WEST:
 		newX -= val
-	default:
 	}
 
 	return newX, newY
@@ -63,7 +61,7 @@ func (r *rover) CurrentPosition() string {
 	return fmt.Sprintf("%v:%v,%v", r.direction, r.x, r.y)
 }
 
-func (r *rover) findCurrIdx(currDirection direction) int {
+func (r *rover) findCurrIdx(currDirection Direction) int {
 	for idx, direction := range directions {
 		if direction == currDirection {
 			return idx

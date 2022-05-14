@@ -80,7 +80,8 @@ func (r *rover) ExploreMars(c *gin.Context) {
 	}
 
 	land := models.NewGrid(maxX, maxY)
-	rover := models.NewRover()
+	startDirection := models.NewDirection("N")
+	rover := models.NewRover(0, 0, startDirection)
 	roverService := services.NewRover(rover, land, r.moveInstructionMapper)
 	histories := roverService.Explore(instructions[1:])
 
