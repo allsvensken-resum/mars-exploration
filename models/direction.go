@@ -1,29 +1,27 @@
 package models
 
-import "fmt"
-
 var (
-	NORTH, _ = NewDirection("N")
-	SOUTH, _ = NewDirection("S")
-	WEST, _  = NewDirection("W")
-	EAST, _  = NewDirection("E")
+	NORTH = NewDirection("N")
+	SOUTH = NewDirection("S")
+	WEST  = NewDirection("W")
+	EAST  = NewDirection("E")
 )
 
 var (
-	directions = []direction{WEST, NORTH, EAST, SOUTH}
+	directions = []Direction{WEST, NORTH, EAST, SOUTH}
 )
 
-type direction string
+type Direction string
 
-func NewDirection(dir string) (direction, error) {
+func NewDirection(dir string) Direction {
 	switch dir {
 	case "N":
 	case "E":
 	case "S":
 	case "W":
 	default:
-		return "WRONG DIRECTION", fmt.Errorf("Wrong value for direction type.")
+		return "WRONG DIRECTION"
 	}
 
-	return (direction)(dir), nil
+	return (Direction)(dir)
 }
