@@ -30,9 +30,23 @@ func NewRoverHandler(moveInstructionMapper map[string][2]int) Rover {
 
 func (r *rover) ExploreMars(c *gin.Context) {
 	var form Form
-	_ = c.ShouldBind(&form)
+	err := c.ShouldBind(&form)
+	const ALLOW_FILE_TYPE = "text/plain"
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "can't bind file"})
+		return
+	}
+
+	fileType := form.File.Header["Content-Type"][0]
+	if !strings.Contains(ALLOW_FILE_TYPE, fileType) {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "accept only .txt file."})
+		return
+	}
 
 	openedFile, err := form.File.Open()
+	defer openedFile.Close()
+
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"message": "can't open file."})
 		return
