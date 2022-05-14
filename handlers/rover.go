@@ -90,5 +90,5 @@ func (r *rover) ExploreMars(c *gin.Context) {
 	roverService := services.NewRover(rover, land, r.moveInstructionMapper)
 	histories := roverService.Explore(instructions[1:])
 
-	c.JSON(http.StatusOK, gin.H{"result": histories})
+	c.JSON(http.StatusOK, gin.H{"instructions": instructions, "result": histories})
 }

@@ -28,14 +28,15 @@ func (r *rover) Explore(instructions []string) []string {
 		if isMoveInstruction(move) {
 			newX, newY := r.rover.TryMove(move)
 			if !r.land.IsOutOfBound(newX, newY) {
-				histories = append(histories, r.rover.Move(newX, newY))
+				r.rover.Move(newX, newY)
 			}
-			continue
 		}
 
 		if isRotateInstruction(rotate) {
-			histories = append(histories, r.rover.Rotate(rotate))
+			r.rover.Rotate(rotate)
 		}
+
+		histories = append(histories, r.rover.CurrentPosition())
 	}
 
 	return histories
