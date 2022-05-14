@@ -79,10 +79,10 @@ func (r *rover) ExploreMars(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"message": "grid size is invalid."})
 	}
 
-	WEST := models.NewDirection("W")
-	NORTH := models.NewDirection("N")
-	EAST := models.NewDirection("E")
-	SOUTH := models.NewDirection("S")
+	WEST := models.NewWestDirection()
+	NORTH := models.NewNorthDirection()
+	EAST := models.NewEastDirection()
+	SOUTH := models.NewSouthDirection()
 
 	directions := []models.Direction{WEST, NORTH, EAST, SOUTH}
 	land := models.NewGrid(maxX, maxY)

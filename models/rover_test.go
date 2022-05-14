@@ -33,7 +33,7 @@ func TestMove(t *testing.T) {
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
 			newX, newY := c.xVal, c.yVal
-			direction := models.NewDirection("N")
+			direction := models.NewNorthDirection()
 			rover := models.NewRover(0, 0, direction, []models.Direction{})
 			actual := rover.Move(newX, newY)
 			assert.Equal(t, c.expected, actual)
@@ -52,11 +52,16 @@ func TestTryMove(t *testing.T) {
 		expectedY int
 	}
 
+	EAST := models.NewEastDirection()
+	NORTH := models.NewNorthDirection()
+	SOUTH := models.NewSouthDirection()
+	WEST := models.NewWestDirection()
+
 	cases := []testCase{
 		{
 			name:      "should increase x value.",
 			val:       1,
-			direction: models.NewDirection("E"),
+			direction: EAST,
 			startX:    0,
 			startY:    0,
 			expectedX: 1,
@@ -65,7 +70,7 @@ func TestTryMove(t *testing.T) {
 		{
 			name:      "should decrease x value.",
 			val:       1,
-			direction: models.NewDirection("W"),
+			direction: WEST,
 			startX:    1,
 			startY:    0,
 			expectedX: 0,
@@ -74,7 +79,7 @@ func TestTryMove(t *testing.T) {
 		{
 			name:      "should increase y value.",
 			val:       1,
-			direction: models.NewDirection("N"),
+			direction: NORTH,
 			startX:    1,
 			startY:    0,
 			expectedX: 1,
@@ -83,20 +88,11 @@ func TestTryMove(t *testing.T) {
 		{
 			name:      "should decrease y value.",
 			val:       1,
-			direction: models.NewDirection("S"),
+			direction: SOUTH,
 			startX:    1,
 			startY:    1,
 			expectedX: 1,
 			expectedY: 0,
-		},
-		{
-			name:      "should stay the same position if something wrong with direction.",
-			val:       1,
-			direction: models.NewDirection("WRONG"),
-			startX:    1,
-			startY:    1,
-			expectedX: 1,
-			expectedY: 1,
 		},
 	}
 
@@ -106,6 +102,68 @@ func TestTryMove(t *testing.T) {
 			actualX, actualY := rover.TryMove(c.val)
 			assert.Equal(t, c.expectedX, actualX)
 			assert.Equal(t, c.expectedY, actualY)
+		})
+	}
+}
+
+func TestRotate(t *testing.T) {
+	type testCase struct {
+		name           string
+		val            int
+		startDirection models.Direction
+		expected       string
+	}
+
+	NORTH := models.NewNorthDirection()
+	SOUTH := models.NewSouthDirection()
+	WEST := models.NewWestDirection()
+	EAST := models.NewEastDirection()
+
+	directions := []models.Direction{
+		NORTH,
+		EAST,
+		SOUTH,
+		WEST,
+	}
+
+	cases := []testCase{
+		{
+			name:           "should change from NORTH to WEST",
+			val:            -1,
+			startDirection: NORTH,
+			expected:       WEST.GetName(),
+		},
+		{
+			name:           "should change from NORTH to EAST",
+			val:            1,
+			startDirection: NORTH,
+			expected:       EAST.GetName(),
+		},
+		{
+			name:           "should change from WEST to SOUTH",
+			val:            -1,
+			startDirection: WEST,
+			expected:       SOUTH.GetName(),
+		},
+		{
+			name:           "should change from SOUTH to WEST",
+			val:            1,
+			startDirection: SOUTH,
+			expected:       WEST.GetName(),
+		},
+		{
+			name:           "should change from NORTH TO NORTH",
+			val:            8,
+			startDirection: NORTH,
+			expected:       NORTH.GetName(),
+		},
+	}
+
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			rover := models.NewRover(0, 0, c.startDirection, directions)
+			actual := rover.Rotate(c.val)
+			assert.Contains(t, actual, c.expected)
 		})
 	}
 }

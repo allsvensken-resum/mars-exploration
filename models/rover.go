@@ -52,7 +52,7 @@ func (r *rover) CurrentPosition() string {
 
 func (r *rover) findCurrIdx(currDirection Direction) int {
 	for idx, direction := range r.directions {
-		if direction == currDirection {
+		if direction.GetName() == currDirection.GetName() {
 			return idx
 		}
 	}

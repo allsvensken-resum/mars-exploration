@@ -5,6 +5,22 @@ type Direction interface {
 	GetName() string
 }
 
+func NewNorthDirection() *NORTH {
+	return &NORTH{name: "N"}
+}
+
+func NewSouthDirection() *SOUTH {
+	return &SOUTH{name: "S"}
+}
+
+func NewWestDirection() *WEST {
+	return &WEST{name: "W"}
+}
+
+func NewEastDirection() *EAST {
+	return &EAST{name: "E"}
+}
+
 type NORTH struct {
 	name string
 }
@@ -51,30 +67,4 @@ func (e *EAST) MoveFollowDirection(x, y, val int) (int, int) {
 
 func (e *EAST) GetName() string {
 	return e.name
-}
-
-type WRONG_DIRECTION struct {
-	name string
-}
-
-func (w *WRONG_DIRECTION) MoveFollowDirection(x, y, val int) (int, int) {
-	return x, y
-}
-
-func (w *WRONG_DIRECTION) GetName() string {
-	return w.name
-}
-
-func NewDirection(dir string) Direction {
-	switch dir {
-	case "N":
-		return &NORTH{name: dir}
-	case "E":
-		return &EAST{name: dir}
-	case "S":
-		return &SOUTH{name: dir}
-	case "W":
-		return &WEST{name: dir}
-	}
-	return &WRONG_DIRECTION{name: "WRONG DIRECTION"}
 }
