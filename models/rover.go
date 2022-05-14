@@ -10,13 +10,14 @@ type IRover interface {
 }
 
 type rover struct {
-	x         int
-	y         int
-	direction Direction
+	x          int
+	y          int
+	direction  Direction
+	directions []Direction
 }
 
-func NewRover(x, y int, direction Direction) IRover {
-	return &rover{x: x, y: y, direction: direction}
+func NewRover(x, y int, direction Direction, directions []Direction) IRover {
+	return &rover{x: x, y: y, direction: direction, directions: directions}
 }
 
 func (r *rover) Move(newX, newY int) string {
@@ -27,7 +28,7 @@ func (r *rover) Move(newX, newY int) string {
 func (r *rover) Rotate(val int) string {
 	currIdx := r.findCurrIdx(r.direction)
 	nextIdx := currIdx + val
-	directionsLength := len(directions)
+	directionsLength := len(r.directions)
 
 	if nextIdx < 0 {
 		nextIdx = directionsLength - 1
@@ -37,32 +38,20 @@ func (r *rover) Rotate(val int) string {
 		nextIdx = nextIdx % directionsLength
 	}
 
-	r.direction = directions[nextIdx]
+	r.direction = r.directions[nextIdx]
 	return r.CurrentPosition()
 }
 
 func (r *rover) TryMove(val int) (int, int) {
-	newX, newY := r.x, r.y
-	switch r.direction {
-	case NORTH:
-		newY += val
-	case SOUTH:
-		newY -= val
-	case EAST:
-		newX += val
-	case WEST:
-		newX -= val
-	}
-
-	return newX, newY
+	return r.direction.MoveFollowDirection(r.x, r.y, val)
 }
 
 func (r *rover) CurrentPosition() string {
-	return fmt.Sprintf("%v:%v,%v", r.direction, r.x, r.y)
+	return fmt.Sprintf("%v:%v,%v", r.direction.GetName(), r.x, r.y)
 }
 
 func (r *rover) findCurrIdx(currDirection Direction) int {
-	for idx, direction := range directions {
+	for idx, direction := range r.directions {
 		if direction == currDirection {
 			return idx
 		}

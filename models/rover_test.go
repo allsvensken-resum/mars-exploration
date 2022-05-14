@@ -34,7 +34,7 @@ func TestMove(t *testing.T) {
 		t.Run(c.name, func(t *testing.T) {
 			newX, newY := c.xVal, c.yVal
 			direction := models.NewDirection("N")
-			rover := models.NewRover(0, 0, direction)
+			rover := models.NewRover(0, 0, direction, []models.Direction{})
 			actual := rover.Move(newX, newY)
 			assert.Equal(t, c.expected, actual)
 		})
@@ -102,7 +102,7 @@ func TestTryMove(t *testing.T) {
 
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
-			rover := models.NewRover(c.startX, c.startY, c.direction)
+			rover := models.NewRover(c.startX, c.startY, c.direction, []models.Direction{})
 			actualX, actualY := rover.TryMove(c.val)
 			assert.Equal(t, c.expectedX, actualX)
 			assert.Equal(t, c.expectedY, actualY)
