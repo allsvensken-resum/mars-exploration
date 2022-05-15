@@ -43,8 +43,8 @@ func (r *rover) Explore(instructions []string) []string {
 
 func (r *rover) mapInstructionToNumber(instructions []string) [][2]int {
 	mappedInstructions := make([][2]int, 0)
+	moveMap := getMoveInstructionMapper()
 	for _, instruction := range instructions {
-		moveMap := getMoveInstructionMapper()
 		mapped, ok := moveMap[instruction]
 
 		if ok {
