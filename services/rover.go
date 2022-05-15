@@ -17,7 +17,7 @@ func NewRover(rov models.IRover, land models.Grid) IRover {
 
 func (r *rover) Explore(instructions []string) []string {
 	histories := make([]string, 0)
-	histories = append(histories, r.rover.CurrentPosition())
+	histories = append(histories, r.rover.Status())
 	mappedInstructions := r.mapInstructionToNumber(instructions)
 
 	for _, instruction := range mappedInstructions {
