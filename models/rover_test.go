@@ -105,13 +105,17 @@ func TestRotate(t *testing.T) {
 		name           string
 		val            int
 		startDirection models.Direction
-		expected       string
+		expected       models.Direction
 	}
 
 	NORTH := models.NewNorthDirection()
 	SOUTH := models.NewSouthDirection()
 	WEST := models.NewWestDirection()
 	EAST := models.NewEastDirection()
+	NORTHEAST := models.NewNorthEastDirection()
+	NORTHWEST := models.NewNorthWestDirection()
+	SOUTHEAST := models.NewSouthEastDirection()
+	SOUTHWEST := models.NewSouthWestDirection()
 
 	directions := models.NewDirections()
 
@@ -120,31 +124,67 @@ func TestRotate(t *testing.T) {
 			name:           "should change from NORTH to WEST",
 			val:            -2,
 			startDirection: NORTH,
-			expected:       WEST.GetName(),
+			expected:       WEST,
 		},
 		{
 			name:           "should change from NORTH to EAST",
 			val:            2,
 			startDirection: NORTH,
-			expected:       EAST.GetName(),
+			expected:       EAST,
 		},
 		{
 			name:           "should change from WEST to SOUTH",
 			val:            -2,
 			startDirection: WEST,
-			expected:       SOUTH.GetName(),
+			expected:       SOUTH,
 		},
 		{
 			name:           "should change from SOUTH to WEST",
 			val:            2,
 			startDirection: SOUTH,
-			expected:       WEST.GetName(),
+			expected:       WEST,
 		},
 		{
 			name:           "should change from NORTH TO NORTH",
 			val:            16,
 			startDirection: NORTH,
-			expected:       NORTH.GetName(),
+			expected:       NORTH,
+		},
+		{
+			name:           "should change from NORTH TO NORTH EAST",
+			val:            1,
+			startDirection: NORTH,
+			expected:       NORTHEAST,
+		},
+		{
+			name:           "should change from NORTH EAST TO EAST",
+			val:            1,
+			startDirection: NORTHEAST,
+			expected:       EAST,
+		},
+		{
+			name:           "should change from NORTH EAST TO SOUTH EAST",
+			val:            2,
+			startDirection: NORTHEAST,
+			expected:       SOUTHEAST,
+		},
+		{
+			name:           "should change from SOUTH EAST TO SOUTH WEST",
+			val:            2,
+			startDirection: SOUTHEAST,
+			expected:       SOUTHWEST,
+		},
+		{
+			name:           "should change from SOUTH WEST TO NORTH WEST",
+			val:            2,
+			startDirection: SOUTHWEST,
+			expected:       NORTHWEST,
+		},
+		{
+			name:           "should change from NORTH to NORTH WEST",
+			val:            -1,
+			startDirection: NORTH,
+			expected:       NORTHWEST,
 		},
 	}
 
@@ -152,7 +192,7 @@ func TestRotate(t *testing.T) {
 		t.Run(c.name, func(t *testing.T) {
 			rover := models.NewRover(0, 0, c.startDirection, directions)
 			actual := rover.Rotate(c.val)
-			assert.Equal(t, c.expected, actual)
+			assert.Equal(t, c.expected.GetName(), actual)
 		})
 	}
 }
