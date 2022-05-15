@@ -5,6 +5,12 @@ type Direction interface {
 	GetName() string
 }
 
+func NewDirections() []Direction {
+	return []Direction{
+		NewNorthDirection(), NewEastDirection(), NewSouthDirection(), NewWestDirection(),
+	}
+}
+
 func NewNorthDirection() *NORTH {
 	return &NORTH{name: "N"}
 }

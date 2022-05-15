@@ -119,12 +119,7 @@ func TestRotate(t *testing.T) {
 	WEST := models.NewWestDirection()
 	EAST := models.NewEastDirection()
 
-	directions := []models.Direction{
-		NORTH,
-		EAST,
-		SOUTH,
-		WEST,
-	}
+	directions := models.NewDirections()
 
 	cases := []testCase{
 		{

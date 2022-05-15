@@ -21,11 +21,10 @@ type Rover interface {
 }
 
 type rover struct {
-	moveInstructionMapper map[string][2]int
 }
 
-func NewRoverHandler(moveInstructionMapper map[string][2]int) Rover {
-	return &rover{moveInstructionMapper: moveInstructionMapper}
+func NewRoverHandler() Rover {
+	return &rover{}
 }
 
 func (r *rover) ExploreMars(c *gin.Context) {
@@ -80,15 +79,12 @@ func (r *rover) ExploreMars(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"message": "grid size is invalid."})
 	}
 
-	WEST := models.NewWestDirection()
 	NORTH := models.NewNorthDirection()
-	EAST := models.NewEastDirection()
-	SOUTH := models.NewSouthDirection()
 
-	directions := []models.Direction{WEST, NORTH, EAST, SOUTH}
+	directions := models.NewDirections()
 	land := models.NewGrid(maxX, maxY)
 	rover := models.NewRover(0, 0, NORTH, directions)
-	roverService := services.NewRover(rover, land, r.moveInstructionMapper)
+	roverService := services.NewRover(rover, land)
 	histories := roverService.Explore(instructions[1:])
 
 	c.JSON(http.StatusOK, gin.H{"instructions": instructions, "result": histories})
