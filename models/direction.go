@@ -7,6 +7,13 @@ type Direction interface {
 
 func NewDirections() []Direction {
 	return []Direction{
-		NewNorthDirection(), NewEastDirection(), NewSouthDirection(), NewWestDirection(),
+		NewNorthDirection(),
+		NewNorthEastDirection(),
+		NewEastDirection(),
+		NewSouthEastDirection(),
+		NewSouthDirection(),
+		NewSouthWestDirection(),
+		NewWestDirection(),
+		NewNorthWestDirection(),
 	}
 }
