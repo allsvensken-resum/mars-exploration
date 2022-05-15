@@ -118,31 +118,31 @@ func TestRotate(t *testing.T) {
 	cases := []testCase{
 		{
 			name:           "should change from NORTH to WEST",
-			val:            -1,
+			val:            -2,
 			startDirection: NORTH,
 			expected:       WEST.GetName(),
 		},
 		{
 			name:           "should change from NORTH to EAST",
-			val:            1,
+			val:            2,
 			startDirection: NORTH,
 			expected:       EAST.GetName(),
 		},
 		{
 			name:           "should change from WEST to SOUTH",
-			val:            -1,
+			val:            -2,
 			startDirection: WEST,
 			expected:       SOUTH.GetName(),
 		},
 		{
 			name:           "should change from SOUTH to WEST",
-			val:            1,
+			val:            2,
 			startDirection: SOUTH,
 			expected:       WEST.GetName(),
 		},
 		{
 			name:           "should change from NORTH TO NORTH",
-			val:            8,
+			val:            16,
 			startDirection: NORTH,
 			expected:       NORTH.GetName(),
 		},
