@@ -4,7 +4,7 @@ type SOUTH struct {
 	name string
 }
 
-func NewSouthDirection() *SOUTH {
+func NewSouthDirection() Direction {
 	return &SOUTH{name: "S"}
 }
 
