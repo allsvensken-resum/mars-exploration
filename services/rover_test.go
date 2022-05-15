@@ -55,8 +55,40 @@ func TestExplore(t *testing.T) {
 		rover := NewRover(roverModel, land)
 
 		actual := rover.Explore(instructions)
+
 		assert.Equal(t, expected, len(actual))
 		assert.Equal(t, expectedPos, actual[len(actual)-1])
 	})
+
+	type testReachingEdge struct {
+		instructions []string
+		expectedPos  string
+	}
+
+	reachingEdgeCases := []testReachingEdge{
+		{
+			instructions: []string{"B", "B", "B"},
+			expectedPos:  "0,0",
+		},
+		{
+			instructions: []string{"F", "F", "F", "F", "F", "F", "F"},
+			expectedPos:  "0,5",
+		},
+		{
+			instructions: []string{"R", "F", "F", "F", "F", "F", "F"},
+			expectedPos:  "5,0",
+		},
+	}
+
+	for _, rc := range reachingEdgeCases {
+		t.Run("should not move when reaching edge", func(t *testing.T) {
+			roverModel := models.NewRover(x, y, startDirection, directions)
+			rover := NewRover(roverModel, land)
+
+			actual := rover.Explore(rc.instructions)
+
+			assert.Contains(t, actual[len(actual)-1], rc.expectedPos)
+		})
+	}
 
 }
