@@ -10,7 +10,7 @@ func NewGrid(x, y int) Grid {
 }
 
 func (g *Grid) IsOutOfBound(x, y int) bool {
-	if x >= g.maxX || y >= g.maxY || x < 0 || y < 0 {
+	if x > g.maxX || y > g.maxY || x < 0 || y < 0 {
 		return true
 	}
 
