@@ -20,13 +20,7 @@ func TestMove(t *testing.T) {
 			name:     "should move follow new x and new y value",
 			xVal:     1,
 			yVal:     1,
-			expected: "N:1,1",
-		},
-		{
-			name:     "should stay the same direction",
-			xVal:     2,
-			yVal:     2,
-			expected: "N:2,2",
+			expected: "1,1",
 		},
 	}
 
