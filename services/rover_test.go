@@ -47,4 +47,16 @@ func TestExplore(t *testing.T) {
 		})
 	}
 
+	t.Run("should have 3 result with backward result at last", func(t *testing.T) {
+		instructions := []string{"F", "B"}
+		expected := 3
+		expectedPos := "N:0,0"
+		roverModel := models.NewRover(x, y, startDirection, directions)
+		rover := NewRover(roverModel, land)
+
+		actual := rover.Explore(instructions)
+		assert.Equal(t, expected, len(actual))
+		assert.Equal(t, expectedPos, actual[len(actual)-1])
+	})
+
 }
