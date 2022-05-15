@@ -35,7 +35,7 @@ func (r *rover) Explore(instructions []string) []string {
 			r.rover.Rotate(rotate)
 		}
 
-		histories = append(histories, r.rover.CurrentPosition())
+		histories = append(histories, r.rover.Status())
 	}
 
 	return histories

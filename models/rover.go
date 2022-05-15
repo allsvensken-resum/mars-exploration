@@ -7,6 +7,8 @@ type IRover interface {
 	Rotate(val int) string
 	TryMove(val int) (int, int)
 	CurrentPosition() string
+	CurrentDirection() string
+	Status() string
 }
 
 type rover struct {
@@ -39,7 +41,7 @@ func (r *rover) Rotate(val int) string {
 	}
 
 	r.direction = r.directions[nextIdx]
-	return r.CurrentPosition()
+	return r.CurrentDirection()
 }
 
 func (r *rover) TryMove(val int) (int, int) {
@@ -47,7 +49,15 @@ func (r *rover) TryMove(val int) (int, int) {
 }
 
 func (r *rover) CurrentPosition() string {
-	return fmt.Sprintf("%v:%v,%v", r.direction.GetName(), r.x, r.y)
+	return fmt.Sprintf("%v,%v", r.x, r.y)
+}
+
+func (r *rover) CurrentDirection() string {
+	return r.direction.GetName()
+}
+
+func (r *rover) Status() string {
+	return fmt.Sprintf("%v:%v", r.CurrentDirection(), r.CurrentPosition())
 }
 
 func (r *rover) findCurrIdx(currDirection Direction) int {

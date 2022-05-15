@@ -158,7 +158,7 @@ func TestRotate(t *testing.T) {
 		t.Run(c.name, func(t *testing.T) {
 			rover := models.NewRover(0, 0, c.startDirection, directions)
 			actual := rover.Rotate(c.val)
-			assert.Contains(t, actual, c.expected)
+			assert.Equal(t, c.expected, actual)
 		})
 	}
 }
