@@ -31,7 +31,7 @@ func (r *rover) Rotate(val int) string {
 	directionsLength := len(r.directions)
 
 	if nextIdx < 0 {
-		nextIdx = directionsLength - 1
+		nextIdx = directionsLength + nextIdx
 	}
 
 	if nextIdx >= directionsLength {
