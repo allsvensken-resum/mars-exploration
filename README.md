@@ -29,9 +29,11 @@ We are in a mission to control a rover that explore Mars planet. And the mission
 
 - This application is using RESTAPI as interface for this application.
 
-- This application received file as input.
+- This application received file as input **ONLY ACCEPT .txt FILE**.
 
 - The first line will always be a size of a maps represent in integer only without any seperator.
+
+- **ONLY SUPPORT MAXIMUM MAP SIZE 99** for now.
 
 - The other line are the list of instructions which must be one instruction per line.
 
@@ -45,6 +47,7 @@ We are in a mission to control a rover that explore Mars planet. And the mission
 - You can test it with postman as client to upload the file like picture below.
 ![Postman Example](/assets/mars-exploration-test-01.png)
 - The output is **JSON** with instructions array that you write down on file and the result array of the rover direction and position. 
+- The example instructions file are included in [Example files](https://github.com/allsvensken-resum/mars-exploration/tree/main/assets/examples).
 
 ### Example
 
