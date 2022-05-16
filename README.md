@@ -39,6 +39,8 @@ We are in a mission to control a rover that explore Mars planet. And the mission
 
 - The list of instructions that you can use are listed above **Rules**.
 
+- The instruction that aren't in the list are just ignored.
+
 ## How to use application?
 
 - You can easily run this application with docker-compose up
