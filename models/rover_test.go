@@ -50,6 +50,10 @@ func TestTryMove(t *testing.T) {
 	NORTH := models.NewNorthDirection()
 	SOUTH := models.NewSouthDirection()
 	WEST := models.NewWestDirection()
+	NORTHEAST := models.NewNorthEastDirection()
+	NORTHWEST := models.NewNorthWestDirection()
+	SOUTHEAST := models.NewSouthEastDirection()
+	SOUTHWEST := models.NewSouthWestDirection()
 
 	cases := []testCase{
 		{
@@ -87,6 +91,42 @@ func TestTryMove(t *testing.T) {
 			startY:    1,
 			expectedX: 1,
 			expectedY: 0,
+		},
+		{
+			name:      "should increase both x and y value.",
+			val:       1,
+			direction: NORTHEAST,
+			startX:    1,
+			startY:    1,
+			expectedX: 2,
+			expectedY: 2,
+		},
+		{
+			name:      "should decrease x and increase y value.",
+			val:       -1,
+			direction: SOUTHEAST,
+			startX:    1,
+			startY:    1,
+			expectedX: 0,
+			expectedY: 2,
+		},
+		{
+			name:      "should decrease x and decrease y value.",
+			direction: SOUTHWEST,
+			val:       1,
+			startX:    1,
+			startY:    1,
+			expectedX: 0,
+			expectedY: 0,
+		},
+		{
+			name:      "should decrease x and increase y value.",
+			direction: NORTHWEST,
+			val:       1,
+			startX:    1,
+			startY:    1,
+			expectedX: 0,
+			expectedY: 2,
 		},
 	}
 
