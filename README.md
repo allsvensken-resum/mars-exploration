@@ -3,8 +3,6 @@
 
 We are in a mission to control a rover that explore Mars planet. And the mission control already gave us a rover instructions to move into specific directions and positions.
 
-***
-
 ## Rules
 
 - F for moving forward 1 block.
@@ -27,8 +25,6 @@ We are in a mission to control a rover that explore Mars planet. And the mission
   - SE
 - The rover moving changes both x and y coordinates with value one when its direction is halfturn (NE, NW, SE, SW)
 
-***
-
 ### Input
 
 - This application is using RESTAPI as interface for this application.
@@ -41,8 +37,6 @@ We are in a mission to control a rover that explore Mars planet. And the mission
 
 - The list of instructions that you can use are listed above **Rules**.
 
-***
-
 ### How to use application?
 
 - You can easily run this application with docker-compose up
@@ -51,8 +45,6 @@ We are in a mission to control a rover that explore Mars planet. And the mission
 - You can test it with postman as client to upload the file like picture below.
 ![Postman Example](/assets/mars-exploration-test-01.png)
 - The output is **JSON** with instructions array that you write down on file and the result array of the rover direction and position. 
-
-***
 
 ### Example
 
@@ -92,5 +84,3 @@ We are in a mission to control a rover that explore Mars planet. And the mission
         "S:1,0",
         "W:1,0"
     ]
-
-***
