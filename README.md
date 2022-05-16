@@ -25,7 +25,7 @@ We are in a mission to control a rover that explore Mars planet. And the mission
   - SE
 - The rover moving changes both x and y coordinates with value one when its direction is halfturn (NE, NW, SE, SW)
 
-### Input
+## Input
 
 - This application is using RESTAPI as interface for this application.
 
@@ -37,7 +37,7 @@ We are in a mission to control a rover that explore Mars planet. And the mission
 
 - The list of instructions that you can use are listed above **Rules**.
 
-### How to use application?
+## How to use application?
 
 - You can easily run this application with docker-compose up
 - This application is running on port **8080**.
@@ -48,8 +48,8 @@ We are in a mission to control a rover that explore Mars planet. And the mission
 
 ### Example
 
-**Input**
-    
+  **Input**    
+
     24
     R
     F
@@ -60,7 +60,7 @@ We are in a mission to control a rover that explore Mars planet. And the mission
     F
     R
 
-**Output**
+ **Output**
 
     "instructions": [
         "24",
